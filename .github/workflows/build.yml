@@ -14,11 +14,13 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php: [8.0, 8.1]
+        php: [7.4, 8.0, 8.1]
         symfony: [3.4, 4.4, 5.2, 6.0]
         exclude:
           - php: 8.0
             symfony: 3.4
+          - php: 7.4
+            symfony: 6.0
     steps:
       - name: Checkout
         uses: actions/checkout@v2
