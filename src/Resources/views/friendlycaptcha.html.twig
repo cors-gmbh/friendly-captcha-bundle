@@ -1,9 +1,10 @@
 {%- block cors_friendly_catcha_type_row -%}
     <div class="frc-captcha"
          data-sitekey="{{ form.vars.sitekey }}"
-         data-solution-field-name="{{ form.vars.full_name }}">
-        {% for type, value in form.vars.friendly_captcha %}
-            data-{{ type }}="{{ value }}"
-        {% endfor %}
+         data-solution-field-name="{{ form.vars.full_name }}"
+            {% for type, value in form.vars.friendly_captcha %}
+                data-{{ type }}="{{ value }}"
+            {% endfor %}
+    >
     </div>
 {%- endblock cors_friendly_catcha_type_row -%}
