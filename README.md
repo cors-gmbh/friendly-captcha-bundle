@@ -1,7 +1,7 @@
 CORS Friendly Captcha Bundle
 --------
 
-[![Actions Status](https://github.com/cors-gmbh/friendly-captcha-bundle/workflows/CI/badge.svg)](https://github.com/cors-gmbh/friendly-captcha-bundle/actions)
+[![CI](https://github.com/cors-gmbh/friendly-captcha-bundle/actions/workflows/build.yml/badge.svg)](https://github.com/cors-gmbh/friendly-captcha-bundle/actions/workflows/build.yml)
 
 This bundle provides easy [friendlycaptcha.com](https://www.friendlycaptcha.com) form field for Symfony.
 
