@@ -1,0 +1,48 @@
+{
+    "name": "cors/friendly-captcha-bundle",
+    "type": "symfony-bundle",
+    "description": "CORS - Friendly Captcha Bundle",
+    "keywords": [
+        "coreshop",
+        "pimcore",
+        "ecommerce"
+    ],
+    "homepage": "http://www.cors.gmbh",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "CORS GmbH",
+            "email": "office@cors.gmbh",
+            "homepage": "https://www.cors.gmbh/",
+            "role": "TEAM"
+        }
+    ],
+    "require": {
+        "php": ">=8.0"
+    },
+    "require-dev": {
+        "symplify/easy-coding-standard": "^9.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "CORS\\Bundle\\FriendlyCaptchaBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "classmap": [
+            "Kernel.php"
+        ]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        },
+        "pimcore": {
+            "bundles": [
+                "CORS\\Bundle\\FriendlyCaptchaBundle\\CORSFriendlyCaptchaBundle"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

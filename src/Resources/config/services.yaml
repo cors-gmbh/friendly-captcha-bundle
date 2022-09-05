@@ -1,0 +1,14 @@
+services:
+    CORS\Bundle\FriendlyCaptchaBundle\Validator\FriendlyCaptchaValidValidator:
+        arguments:
+            - '@http_client'
+            - '%cors.friendly_captcha.secret%'
+            - '%cors.friendly_captcha.sitekey%'
+        tags:
+            - { name: validator.constraint_validator, alias: cors_friendly_captcha_validator }
+
+    CORS\Bundle\FriendlyCaptchaBundle\Form\Type\FriendlyCaptchaType:
+        arguments:
+            - '%cors.friendly_captcha.sitekey%'
+        tags:
+            - { name: form.type }

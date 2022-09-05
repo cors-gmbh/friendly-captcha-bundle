@@ -1,0 +1,7 @@
+imports:
+    - { resource: services.yaml }
+    - { resource: 'local/' }
+
+cors_friendly_captcha:
+    sitekey: 'FCMLAJNUOIVIE6LA'
+    secret: 'A1JJJSN6C31UAO01A4ATK9Q3UD2NK4RJPCQ4LPFQGL4O1GIG75SGTBVU4N'

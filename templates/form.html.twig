@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale|slice(0, 2) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script type="module" src="https://unpkg.com/friendly-challenge@0.9.5/widget.module.min.js" async defer></script>
+</head>
+<body>
+    {% form_theme form '@CORSFriendlyCaptcha/friendlycaptcha.html.twig' %}
+
+    {{ form(form) }}
+</body>
+</html>

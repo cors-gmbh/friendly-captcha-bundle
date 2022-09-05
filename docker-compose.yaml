@@ -1,0 +1,90 @@
+version: '3.4'
+
+networks:
+  cors_dev:
+    external: true
+  friendlycaptcha:
+    external: false
+
+services:
+  redis:
+    container_name: friendlycaptcha-redis
+    image: redis:alpine
+    command: redis-server --requirepass password
+    networks:
+      - friendlycaptcha
+
+  db:
+    image: mysql:8
+    container_name: friendlycaptcha-db
+    networks:
+      - cors_dev
+      - friendlycaptcha
+    working_dir: /application
+    volumes:
+      - friendlycaptcha-database:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=ROOT
+      - MYSQL_DATABASE=pimcore
+      - MYSQL_USER=pimcore
+      - MYSQL_PASSWORD=pimcore
+
+  nginx:
+    image: nginx:stable-alpine
+    container_name: friendlycaptcha-nginx
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.friendlycaptcha.rule=HostRegexp(`friendlycaptcha.localhost`)
+      - traefik.http.routers.friendlycaptcha.entrypoints=cors_dev
+      - traefik.http.routers.friendlycaptcha.tls=true
+      - traefik.http.services.friendlycaptcha.loadbalancer.server.port=80
+      - traefik.docker.network=cors_dev
+    networks:
+      - cors_dev
+      - friendlycaptcha
+    volumes:
+      - ./:/var/www/html:ro
+      - ./.docker/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - php
+      - php-debug
+
+  php:
+    image: pimcore/pimcore:PHP8.0-fpm
+    container_name: friendlycaptcha-php
+    command: 'php-fpm'
+    user: '1000:1000'
+    networks:
+      - friendlycaptcha
+      - cors_dev
+    depends_on:
+      - db
+    volumes:
+      - ./:/var/www/html:cached
+      - ./.docker/php.ini:/usr/local/etc/php/conf.d/docker-php-ext-additional.ini:ro
+    environment:
+      - COMPOSER_AUTH=${COMPOSER_AUTH}
+
+  php-debug:
+    image: pimcore/pimcore:PHP8.0-fpm-debug
+    container_name: friendlycaptcha-php-debug
+    command: 'php-fpm'
+    user: '1000:1000'
+    expose:
+      - 9003
+      - 9000
+    depends_on:
+      - db
+    volumes:
+      - ./:/var/www/html:cached
+      - ./.docker/php.ini:/usr/local/etc/php/conf.d/docker-php-ext-additional.ini:ro
+      - ./.docker/xdebug.ini:/usr/local/etc/php/conf.d/xdebug-php-ext-additional.ini:ro
+    networks:
+      - friendlycaptcha
+      - cors_dev
+    environment:
+      - PHP_IDE_CONFIG=serverName=friendlycaptcha.localhost
+      - COMPOSER_AUTH=${COMPOSER_AUTH:-}
+
+volumes:
+  friendlycaptcha-database:
