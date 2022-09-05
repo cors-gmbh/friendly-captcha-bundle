@@ -2,19 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * CORS GmbH.
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- *
- * Full copyright and license information is available in
- * LICENSE.md which is distributed with this source code.
- *
- * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh)
- * @license    https://www.cors.gmbh/license     GPLv3
- */
-
 namespace CORS\Bundle\FriendlyCaptchaBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
@@ -29,8 +16,19 @@ final class CORSFriendlyCaptchaExtension extends Extension
         $configs = $this->processConfiguration($this->getConfiguration([], $container), $configs);
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
+        if ($configs['use_eu_endpoints']) {
+            $puzzleEndpoint = $configs['puzzle']['eu_endpoint'];
+            $verificationEndpoint = $configs['validation']['eu_endpoint'];
+        }
+        else {
+            $puzzleEndpoint = $configs['puzzle']['endpoint'];
+            $verificationEndpoint = $configs['validation']['endpoint'];
+        }
+
         $container->setParameter('cors.friendly_captcha.secret', $configs['secret']);
         $container->setParameter('cors.friendly_captcha.sitekey', $configs['sitekey']);
+        $container->setParameter('cors.friendly_captcha.endpoint.puzzle', $puzzleEndpoint);
+        $container->setParameter('cors.friendly_captcha.endpoint.validation', $verificationEndpoint);
 
         $loader->load('services.yaml');
     }

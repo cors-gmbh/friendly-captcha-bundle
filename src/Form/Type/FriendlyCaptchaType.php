@@ -2,33 +2,23 @@
 
 declare(strict_types=1);
 
-/**
- * CORS GmbH.
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- *
- * Full copyright and license information is available in
- * LICENSE.md which is distributed with this source code.
- *
- * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh)
- * @license    https://www.cors.gmbh/license     GPLv3
- */
-
 namespace CORS\Bundle\FriendlyCaptchaBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class FriendlyCaptchaType extends AbstractType
 {
     protected string $sitekey;
+    protected string $endpoint;
 
-    public function __construct(string $sitekey)
+    public function __construct(string $sitekey, string $endpoint)
     {
         $this->sitekey = $sitekey;
+        $this->endpoint = $endpoint;
     }
 
     public function getParent()
@@ -36,13 +26,38 @@ final class FriendlyCaptchaType extends AbstractType
         return HiddenType::class;
     }
 
-    public function finishView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options)
     {
+        $fcValues = array_filter([
+            'puzzle-puzzle-endpoint' => $this->endpoint,
+            'lang' => $options['lang'] ?? null,
+            'start' => $options['start'] ?? null,
+            'callback' => $options['callback'] ?? null,
+        ]);
+
         $view->vars['sitekey'] = $this->sitekey;
+        $view->vars['friendly_captcha'] = $fcValues;
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'lang' => null,
+            'start' => 'focus',
+            'callback' => null,
+        ]);
+
+        $resolver->setAllowedValues('start', ['auto', 'focus', 'none']);
     }
 
     public function getBlockPrefix()
     {
         return 'cors_friendly_catcha_type';
     }
+
+    public function getSiteKey(): string
+    {
+        return $this->sitekey;
+    }
+
 }

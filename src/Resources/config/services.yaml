@@ -4,6 +4,7 @@ services:
             - '@http_client'
             - '%cors.friendly_captcha.secret%'
             - '%cors.friendly_captcha.sitekey%'
+            - '%cors.friendly_captcha.endpoint.validation%'
         tags:
             - { name: validator.constraint_validator, alias: cors_friendly_captcha_validator }
 

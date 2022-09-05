@@ -2,21 +2,9 @@
 
 declare(strict_types=1);
 
-/**
- * CORS GmbH.
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- *
- * Full copyright and license information is available in
- * LICENSE.md which is distributed with this source code.
- *
- * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh)
- * @license    https://www.cors.gmbh/license     GPLv3
- */
-
 namespace CORS\Bundle\FriendlyCaptchaBundle\Validator;
 
+use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -26,17 +14,23 @@ class FriendlyCaptchaValidValidator extends ConstraintValidator
     protected HttpClientInterface $httpClient;
     protected string $secret;
     protected string $sitekey;
+    protected string $endpoint;
 
-    public function __construct(HttpClientInterface $httpClient, string $secret, string $sitekey)
+    public function __construct(HttpClientInterface $httpClient, string $secret, string $sitekey, string $endpoint)
     {
         $this->httpClient = $httpClient;
         $this->secret = $secret;
         $this->sitekey = $sitekey;
+        $this->endpoint = $endpoint;
     }
 
     public function validate($value, Constraint $constraint)
     {
-        $response = $this->httpClient->request('POST', 'https://api.friendlycaptcha.com/api/v1/siteverify', [
+        if (!$constraint instanceof FriendlyCaptchaValid) {
+            throw new UnexpectedTypeException($constraint, FriendlyCaptchaValid::class);
+        }
+
+        $response = $this->httpClient->request('POST', $this->endpoint, [
             'body' => [
                 'secret' => $this->secret,
                 'sitekey' => $this->sitekey,
@@ -54,7 +48,7 @@ class FriendlyCaptchaValidValidator extends ConstraintValidator
 
         $result = \json_decode($content, true, 512, JSON_THROW_ON_ERROR);
 
-        if (array_key_exists('success', $result) && $result['success']) {
+        if (array_key_exists('success', $result) && $result['success'] === true) {
             return;
         }
 

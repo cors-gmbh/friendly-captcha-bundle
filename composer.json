@@ -3,12 +3,10 @@
     "type": "symfony-bundle",
     "description": "CORS - Friendly Captcha Bundle",
     "keywords": [
-        "coreshop",
-        "pimcore",
-        "ecommerce"
+        "friendly-captcha"
     ],
-    "homepage": "http://www.cors.gmbh",
-    "license": "proprietary",
+    "homepage": "https://www.cors.gmbh",
+    "license": "symfony-bundle",
     "authors": [
         {
             "name": "CORS GmbH",
@@ -18,10 +16,16 @@
         }
     ],
     "require": {
-        "php": ">=8.0"
+        "php": ">=8.0",
+        "symfony/form": "^3.0 || ^4.0 || ^5.0 || ^6.0",
+        "symfony/http-client": "^3.0 || ^4.0 || ^5.0 || ^6.0",
+        "symfony/framework-bundle": "^3.0 || ^4.0 || ^5.0 || ^6.0",
+        "symfony/validator": "^3.0 || ^4.0 || ^5.0 || ^6.0",
+        "symfony/yaml": "^3.0 || ^4.0 || ^5.0 || ^6.0",
+        "twig/twig": "^2.9 || ^3.0"
     },
     "require-dev": {
-        "symplify/easy-coding-standard": "^9.4"
+        "phpunit/phpunit": "^7 || ^8 || ^9.5"
     },
     "autoload": {
         "psr-4": {
@@ -29,20 +33,16 @@
         }
     },
     "autoload-dev": {
-        "classmap": [
-            "Kernel.php"
-        ]
+        "psr-4": {
+            "CORS\\Tests\\Bundle\\FriendlyCaptchaBundle\\": "tests"
+        }
     },
     "extra": {
         "branch-alias": {
             "dev-master": "1.0-dev"
         },
-        "pimcore": {
-            "bundles": [
-                "CORS\\Bundle\\FriendlyCaptchaBundle\\CORSFriendlyCaptchaBundle"
-            ]
+        "symfony": {
+            "allow-contrib": "true"
         }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    }
 }

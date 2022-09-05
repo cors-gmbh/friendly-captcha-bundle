@@ -2,18 +2,6 @@
 
 declare(strict_types=1);
 
-/**
- * CORS GmbH.
- *
- * This source file is available under two different licenses:
- * - GNU General Public License version 3 (GPLv3)
- * Full copyright and license information is available in
- * LICENSE.md which is distributed with this source code.
- *
- * @copyright  Copyright (c) CORS GmbH (https://www.cors.gmbh)
- * @license    https://www.cors.gmbh/license     GPLv3
- */
-
 namespace CORS\Bundle\FriendlyCaptchaBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -27,9 +15,25 @@ final class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
+            ->addDefaultsIfNotSet()
             ->children()
                 ->scalarNode('secret')->cannotBeEmpty()->isRequired()->end()
                 ->scalarNode('sitekey')->cannotBeEmpty()->isRequired()->end()
+                ->booleanNode('use_eu_endpoints')->defaultTrue()->end()
+                ->arrayNode('puzzle')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('endpoint')->defaultValue('https://api.friendlycaptcha.com/api/v1/puzzle')->end()
+                        ->scalarNode('eu_endpoint')->defaultValue('https://eu-api.friendlycaptcha.eu/api/v1/puzzle')->end()
+                    ->end()
+                ->end()
+                ->arrayNode('validation')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('endpoint')->defaultValue('https://api.friendlycaptcha.com/api/v1/siteverify')->end()
+                        ->scalarNode('eu_endpoint')->defaultValue('https://eu-api.friendlycaptcha.eu/api/v1/siteverify')->end()
+                    ->end()
+                ->end()
             ->end();
 
         return $treeBuilder;
