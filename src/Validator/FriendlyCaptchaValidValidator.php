@@ -11,10 +11,10 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class FriendlyCaptchaValidValidator extends ConstraintValidator
 {
-    protected HttpClientInterface $httpClient;
-    protected string $secret;
-    protected string $sitekey;
-    protected string $endpoint;
+    protected $httpClient;
+    protected $secret;
+    protected $sitekey;
+    protected $endpoint;
 
     public function __construct(HttpClientInterface $httpClient, string $secret, string $sitekey, string $endpoint)
     {

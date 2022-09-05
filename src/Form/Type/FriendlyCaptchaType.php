@@ -12,8 +12,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class FriendlyCaptchaType extends AbstractType
 {
-    protected string $sitekey;
-    protected string $endpoint;
+    protected $sitekey;
+    protected $endpoint;
 
     public function __construct(string $sitekey, string $endpoint)
     {
