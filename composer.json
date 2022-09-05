@@ -6,7 +6,7 @@
         "friendly-captcha"
     ],
     "homepage": "https://www.cors.gmbh",
-    "license": "symfony-bundle",
+    "license": "MIT",
     "authors": [
         {
             "name": "CORS GmbH",
