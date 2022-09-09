@@ -12,7 +12,7 @@ This bundle provides easy [friendlycaptcha.com](https://www.friendlycaptcha.com)
 To install CORSFriendlyCaptchaBundle with Composer just type in your terminal:
 
 ```bash
-php composer.phar require cors-gmbh/friendly-captcha-bundle
+php composer.phar require cors/friendly-captcha-bundle
 ```
 
 Now, Composer will automatically download all required files, and install them
