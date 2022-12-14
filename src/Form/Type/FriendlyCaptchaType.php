@@ -29,7 +29,7 @@ final class FriendlyCaptchaType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $fcValues = array_filter([
-            'puzzle-puzzle-endpoint' => $this->endpoint,
+            'puzzle-endpoint' => $this->endpoint,
             'lang' => $options['lang'] ?? null,
             'start' => $options['start'] ?? null,
             'callback' => $options['callback'] ?? null,
