@@ -1,7 +1,7 @@
 {
-    "name": "cors/friendly-captcha-bundle",
+    "name": "elma/friendly-captcha-bundle",
     "type": "symfony-bundle",
-    "description": "CORS - Friendly Captcha Bundle",
+    "description": "ELMA - Friendly Captcha Bundle, fork of the cors/friendly-captcha-bundle",
     "keywords": [
         "friendly-captcha"
     ],
@@ -13,6 +13,10 @@
             "email": "office@cors.gmbh",
             "homepage": "https://www.cors.gmbh/",
             "role": "TEAM"
+        }, {
+            "name": "Bilendi Technology",
+            "email": "team.dev@bilendi.com",
+            "homepage": "https://bilendi.tech"
         }
     ],
     "require": {
@@ -25,7 +29,7 @@
         "twig/twig": "^2.9 || ^3.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^7 || ^8 || ^9.5"
+        "phpunit/phpunit": "^9.5"
     },
     "autoload": {
         "psr-4": {
@@ -37,9 +41,12 @@
             "CORS\\Tests\\Bundle\\FriendlyCaptchaBundle\\": "tests"
         }
     },
+    "replace": {
+        "cors/friendly-captcha-bundle": "*"
+    },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0-dev"
+            "dev-main": "1.0-dev"
         },
         "symfony": {
             "allow-contrib": "true"

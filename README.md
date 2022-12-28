@@ -1,9 +1,11 @@
-CORS Friendly Captcha Bundle
+Elma Friendly Captcha Bundle
 --------
 
-[![CI](https://github.com/cors-gmbh/friendly-captcha-bundle/actions/workflows/build.yml/badge.svg)](https://github.com/cors-gmbh/friendly-captcha-bundle/actions/workflows/build.yml)
+[![CI](https://github.com/elma/friendly-captcha-bundle/actions/workflows/build.yml/badge.svg)](https://github.com/elma/friendly-captcha-bundle/actions/workflows/build.yml)
 
 This bundle provides easy [friendlycaptcha.com](https://www.friendlycaptcha.com) form field for Symfony.
+
+This is a fork of the [cors][https://github.com/cors-gmbh/friendly-captcha-bundle] bundle, that does not seems to be maintened,  [see this PR for details][https://github.com/cors-gmbh/friendly-captcha-bundle/pull/3]
 
 ## Installation
 
@@ -12,7 +14,7 @@ This bundle provides easy [friendlycaptcha.com](https://www.friendlycaptcha.com)
 To install CORSFriendlyCaptchaBundle with Composer just type in your terminal:
 
 ```bash
-php composer.phar require cors/friendly-captcha-bundle
+php composer.phar require elma/friendly-captcha-bundle
 ```
 
 Now, Composer will automatically download all required files, and install them
