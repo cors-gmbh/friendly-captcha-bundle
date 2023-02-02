@@ -7,6 +7,7 @@ namespace CORS\Bundle\FriendlyCaptchaBundle\Validator;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Contracts\HttpClient\Exception\HttpExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class FriendlyCaptchaValidValidator extends ConstraintValidator
@@ -30,13 +31,19 @@ class FriendlyCaptchaValidValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, FriendlyCaptchaValid::class);
         }
 
-        $response = $this->httpClient->request('POST', $this->endpoint, [
-            'body' => [
-                'secret' => $this->secret,
-                'sitekey' => $this->sitekey,
-                'solution' => $value,
-            ],
-        ]);
+        try {
+            $response = $this->httpClient->request('POST', $this->endpoint, [
+                'body' => [
+                    'secret' => $this->secret,
+                    'sitekey' => $this->sitekey,
+                    'solution' => $value,
+                ],
+            ]);
+        }
+        catch (HttpExceptionInterface $ex) {
+            $this->context->addViolation($constraint->message);
+            return;
+        }
 
         $content = $response->getContent();
 
