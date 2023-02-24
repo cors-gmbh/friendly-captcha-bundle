@@ -39,13 +39,13 @@ class FriendlyCaptchaValidValidator extends ConstraintValidator
                     'solution' => $value,
                 ],
             ]);
+
+            $content = $response->getContent();
         }
         catch (HttpExceptionInterface $ex) {
             $this->context->addViolation($constraint->message);
             return;
         }
-
-        $content = $response->getContent();
 
         if (!$content) {
             $this->context->addViolation($constraint->message);
