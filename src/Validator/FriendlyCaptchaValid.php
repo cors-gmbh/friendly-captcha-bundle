@@ -10,7 +10,7 @@ class FriendlyCaptchaValid extends Constraint
 {
     public $message = 'Friendly Captcha is Invalid';
 
-    public function validatedBy()
+    public function validatedBy(): string
     {
         return 'cors_friendly_captcha_validator';
     }
